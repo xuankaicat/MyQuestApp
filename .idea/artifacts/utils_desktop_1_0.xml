@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="utils-desktop-1.0">
+    <output-path>$PROJECT_DIR$/common/utils/build/libs</output-path>
+    <root id="archive" name="utils-desktop-1.0.jar">
+      <element id="module-output" name="MyQuestApp.common.utils.desktopMain" />
+    </root>
+  </artifact>
+</component>
