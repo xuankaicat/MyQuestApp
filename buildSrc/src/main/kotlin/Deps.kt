@@ -29,4 +29,15 @@ object Deps {
             const val extensionsCompose = "com.arkivanov.decompose:extensions-compose-jetbrains:$VERSION"
         }
     }
+
+    object Badoo {
+        object Reaktive {
+            private const val VERSION = "1.1.22"
+            const val reaktive = "com.badoo.reaktive:reaktive:$VERSION"
+            const val reaktiveTesting = "com.badoo.reaktive:reaktive-testing:$VERSION"
+            const val utils = "com.badoo.reaktive:utils:$VERSION"
+            const val coroutinesInterop = "com.badoo.reaktive:coroutines-interop:$VERSION"
+        }
+    }
+
 }

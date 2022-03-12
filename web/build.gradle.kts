@@ -22,7 +22,7 @@ kotlin {
                 implementation(project(":common:utils"))
                 implementation(project(":common:database"))
                 implementation(project(":common:router"))
-                implementation(project(":common:main"))
+                implementation(project(":common:core"))
                 implementation(Deps.ArkIvanov.Decompose.decompose)
                 implementation(Deps.ArkIvanov.MVIKotlin.mvikotlin)
                 implementation(Deps.ArkIvanov.MVIKotlin.mvikotlinMain)
