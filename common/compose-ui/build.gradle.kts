@@ -11,6 +11,9 @@ kotlin {
                 implementation(project(":common:router"))
                 implementation(Deps.ArkIvanov.Decompose.decompose)
                 implementation(Deps.ArkIvanov.Decompose.extensionsCompose)
+
+                // https://mvnrepository.com/artifact/de.rototor.jeuclid/jeuclid-core
+                implementation("de.rototor.jeuclid:jeuclid-core:3.1.14")
             }
         }
     }

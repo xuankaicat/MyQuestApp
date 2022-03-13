@@ -1,14 +1,18 @@
 package com.github.xuankaicat.common.ui
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
+import com.github.xuankaicat.common.utils.MathMLToPainter
 
 @Composable
 fun QuestContent(
@@ -24,10 +28,31 @@ fun QuestContent(
         ) {
             Box(
                 modifier = modifier.padding(4.dp)
+                    .fillMaxSize()
             ) {
-                val src = """
-                    \lim_{n \to \infty}{q^n}=0 (|q|<1)
+                val str = """
+                    <math xmlns="http://www.w3.org/1998/Math/MathML">
+               
+                     <mrow>
+                        <msup><mi>a</mi><mn>2</mn></msup>
+                        <mo>+</mo>
+                                           
+                        <msup><mi>b</mi><mn>2</mn></msup>
+                        <mo>=</mo>
+                                           
+                        <msup><mi>c</mi><mn>2</mn></msup>
+                     </mrow>
+                                   
+                  </math>
                 """.trimIndent()
+                Image(modifier = modifier
+                    .fillMaxWidth()
+                    .align(Alignment.Center)
+                    .padding(start = 48.dp),
+                    painter = MathMLToPainter(str),
+                    contentDescription = "question",
+                    contentScale = ContentScale.FillHeight
+                )
             }
         }
 
