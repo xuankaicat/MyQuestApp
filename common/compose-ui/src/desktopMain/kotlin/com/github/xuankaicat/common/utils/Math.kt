@@ -10,13 +10,15 @@ import net.sourceforge.jeuclid.converter.Converter
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 
+val layoutContext by lazy {
+    (LayoutContextImpl.getDefaultLayoutContext() as LayoutContextImpl).apply {
+        setParameter(Parameter.MATHSIZE, 30)
+    }
+}
+
 @Composable
 actual fun MathMLToPainter(str: String): Painter {
     val converter = Converter.getInstance()
-    val layoutContext = LayoutContextImpl.getDefaultLayoutContext() as LayoutContextImpl
-    layoutContext.apply {
-        setParameter(Parameter.MATHSIZE, 30)
-    }
     val stream = ByteArrayOutputStream()
     converter.convert(str, stream, "image/png", layoutContext)
     val inputStream = ByteArrayInputStream(stream.toByteArray())
