@@ -9,7 +9,7 @@ object Versions {
 
     const val junit = "4.13.2"
 
-    const val compose = "1.1.0"
+    const val compose = "1.1.1"
 
     const val mviKotlin = "3.0.0-beta01"
     const val decompose = "0.5.1"
