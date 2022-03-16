@@ -1,11 +1,8 @@
-@file:JvmMultifileClass
-
 package com.github.xuankaicat.common.utils
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import kotlin.jvm.JvmMultifileClass
 
 @Composable
 expect fun LaTeX(
