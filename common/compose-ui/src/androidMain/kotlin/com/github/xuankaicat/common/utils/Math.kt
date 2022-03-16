@@ -1,27 +1,55 @@
 package com.github.xuankaicat.common.utils
 
-import android.graphics.BitmapFactory
+import androidx.compose.foundation.Canvas
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.asImageBitmap
-import androidx.compose.ui.graphics.painter.BitmapPainter
-import androidx.compose.ui.graphics.painter.Painter
-import net.sourceforge.jeuclid.context.LayoutContextImpl
-import net.sourceforge.jeuclid.context.Parameter
-import net.sourceforge.jeuclid.converter.Converter
-import java.io.ByteArrayInputStream
-import java.io.ByteArrayOutputStream
-
-val layoutContext by lazy {
-    (LayoutContextImpl.getDefaultLayoutContext() as LayoutContextImpl).apply {
-        setParameter(Parameter.MATHSIZE, 30)
-    }
-}
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
+import androidx.compose.ui.graphics.nativeCanvas
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalView
+import com.agog.mathdisplay.MTFontManager
+import com.agog.mathdisplay.parse.MTLineStyle
+import com.agog.mathdisplay.parse.MTMathList
+import com.agog.mathdisplay.parse.MTMathListBuilder
+import com.agog.mathdisplay.render.MTTypesetter
 
 @Composable
-actual fun MathMLToPainter(str: String): Painter {
-    val converter = Converter.getInstance()
-    val stream = ByteArrayOutputStream()
-    converter.convert(str, stream, "image/png", layoutContext)
-    val inputStream = ByteArrayInputStream(stream.toByteArray())
-    return BitmapPainter(BitmapFactory.decodeStream(inputStream).asImageBitmap())
+actual fun LaTeX(
+    str: String,
+    modifier: Modifier,
+    textColor: Color,
+    fontSize: Float,
+) {
+    MTFontManager.setContext(LocalContext.current)
+
+    val list: MTMathList = MTMathListBuilder.buildFromString(str) ?: return
+    val font = MTFontManager.defaultFont()?.copyFontWithSize(fontSize)
+    val currentStyle = MTLineStyle.KMTLineStyleDisplay
+    val dl = MTTypesetter.createLineForMathList(list, font!!, currentStyle)
+
+    dl.textColor = textColor.hashCode()
+
+    val view = LocalView.current
+
+    val textX = (view.width - view.paddingStart - view.paddingEnd + dl.width.toInt()) / 2 + view.paddingStart
+
+    val availableHeight = view.height - view.paddingBottom - view.paddingTop
+
+    var eqheight = dl.ascent + dl.descent
+    if (eqheight < fontSize / 2) {
+        // Set the height to the half the size of the font
+        eqheight = fontSize / 2
+    }
+
+    val textY = (availableHeight - eqheight) / 2 + dl.descent + view.paddingBottom
+    dl.position.x = textX.toFloat()
+    dl.position.y = textY
+
+    Canvas(modifier = modifier) {
+        this.drawIntoCanvas {
+            it.scale(1.0f, -1.0f)
+            dl.draw(it.nativeCanvas)
+        }
+    }
 }

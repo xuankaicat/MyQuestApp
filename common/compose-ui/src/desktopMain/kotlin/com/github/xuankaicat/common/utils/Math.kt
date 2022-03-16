@@ -1,26 +1,37 @@
 package com.github.xuankaicat.common.utils
 
+import androidx.compose.foundation.Image
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.BitmapPainter
-import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.loadImageBitmap
-import net.sourceforge.jeuclid.context.LayoutContextImpl
-import net.sourceforge.jeuclid.context.Parameter
-import net.sourceforge.jeuclid.converter.Converter
+import org.scilab.forge.jlatexmath.TeXConstants
+import org.scilab.forge.jlatexmath.TeXFormula
+import java.awt.Color
+import java.awt.image.BufferedImage
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
-
-val layoutContext by lazy {
-    (LayoutContextImpl.getDefaultLayoutContext() as LayoutContextImpl).apply {
-        setParameter(Parameter.MATHSIZE, 30)
-    }
-}
+import javax.imageio.ImageIO
 
 @Composable
-actual fun MathMLToPainter(str: String): Painter {
-    val converter = Converter.getInstance()
+actual fun LaTeX(
+    str: String,
+    modifier: Modifier,
+    textColor: androidx.compose.ui.graphics.Color,
+    fontSize: Float,
+) {
+    val style = TeXConstants.STYLE_DISPLAY
+    val image = TeXFormula.createBufferedImage(
+        str, style, fontSize / 2.5f, Color(textColor.hashCode()), null) as BufferedImage
     val stream = ByteArrayOutputStream()
-    converter.convert(str, stream, "image/png", layoutContext)
+    ImageIO.write(image, "png", stream)
     val inputStream = ByteArrayInputStream(stream.toByteArray())
-    return BitmapPainter(loadImageBitmap(inputStream))
+    val painter = BitmapPainter(loadImageBitmap(inputStream))
+
+    Image(modifier = modifier,
+        painter = painter,
+        contentDescription = str,
+        contentScale = ContentScale.FillHeight
+    )
 }

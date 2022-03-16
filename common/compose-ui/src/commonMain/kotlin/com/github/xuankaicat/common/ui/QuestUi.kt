@@ -1,7 +1,6 @@
 package com.github.xuankaicat.common.ui
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
@@ -10,9 +9,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
-import com.github.xuankaicat.common.utils.MathMLToPainter
+import com.github.xuankaicat.common.utils.LaTeX
 
 @Composable
 fun QuestContent(
@@ -31,28 +29,16 @@ fun QuestContent(
                     .fillMaxSize()
             ) {
                 val str = """
-                    <math xmlns="http://www.w3.org/1998/Math/MathML">
-               
-                     <mrow>
-                        <msup><mi>a</mi><mn>2</mn></msup>
-                        <mo>+</mo>
-                                           
-                        <msup><mi>b</mi><mn>2</mn></msup>
-                        <mo>=</mo>
-                                           
-                        <msup><mi>c</mi><mn>2</mn></msup>
-                     </mrow>
-                                   
-                  </math>
+                    \frac{\partial f}{\partial x} = 2\,\sqrt{a}\,x
                 """.trimIndent()
-                Image(modifier = modifier
-                    .fillMaxWidth()
-                    .align(Alignment.Center)
-                    .padding(start = 48.dp),
-                    painter = MathMLToPainter(str),
-                    contentDescription = "question",
-                    contentScale = ContentScale.FillHeight
+
+                LaTeX(str = str,
+                    modifier = modifier
+                        .fillMaxWidth()
+                        .align(Alignment.Center)
+                        .padding(start = 48.dp),
                 )
+
             }
         }
 

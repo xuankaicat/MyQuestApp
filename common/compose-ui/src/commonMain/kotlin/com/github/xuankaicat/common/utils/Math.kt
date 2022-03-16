@@ -1,7 +1,16 @@
+@file:JvmMultifileClass
+
 package com.github.xuankaicat.common.utils
 
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import kotlin.jvm.JvmMultifileClass
 
 @Composable
-expect fun MathMLToPainter(str: String): Painter
+expect fun LaTeX(
+    str: String,
+    modifier: Modifier = Modifier,
+    textColor: Color = Color.Black,
+    fontSize: Float = 80f,
+)

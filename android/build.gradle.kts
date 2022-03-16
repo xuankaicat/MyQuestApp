@@ -1,7 +1,7 @@
 plugins {
-    id("org.jetbrains.compose")
     id("com.android.application")
     kotlin("android")
+    id("org.jetbrains.compose")
 }
 
 dependencies {
@@ -10,6 +10,7 @@ dependencies {
     implementation(project(":common:router"))
     implementation(project(":common:compose-ui"))
     implementation(Deps.AndroidX.activity)
+    implementation(Deps.AndroidX.appcompat)
     implementation(compose.material)
     implementation(Deps.ArkIvanov.MVIKotlin.mvikotlin)
     implementation(Deps.ArkIvanov.MVIKotlin.mvikotlinMain)
