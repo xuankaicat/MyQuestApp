@@ -4,18 +4,21 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.github.xuankaicat.common.core.model.testQuests
 import com.github.xuankaicat.common.utils.LaTeX
 
 @Composable
 fun QuestContent(
     modifier: Modifier = Modifier,
 ) {
+    val quest = testQuests[0]
+    var color by remember { mutableStateOf(Color.Black) }
+
     Column {
         Box(
             modifier = modifier
@@ -28,17 +31,13 @@ fun QuestContent(
                 modifier = modifier.padding(4.dp)
                     .fillMaxSize()
             ) {
-                val str = """
-                    \frac{\partial f}{\partial x} = 2\,\sqrt{a}\,x
-                """.trimIndent()
-
-                LaTeX(str = str,
+                LaTeX(str = quest.question,
                     modifier = modifier
                         .fillMaxWidth()
                         .align(Alignment.Center)
                         .padding(start = 48.dp),
+                    textColor = color,
                 )
-
             }
         }
 
@@ -54,11 +53,21 @@ fun QuestContent(
                 .height(96.dp)
                 .weight(1f, false)
 
-            for (i in 0 until 4) {
+            for (i in 0 until quest.answers.size) {
                 AnswerButton(
-                    modifier = btnModifier
+                    modifier = btnModifier,
+                    onclick = {
+                        color = if(quest.correctAnswerCount - 1 == i) {
+                            Color.Green
+                        } else {
+                            Color.Red
+                        }
+                    }
                 ) {
-                    Text(i.toString())
+                    LaTeX(
+                        str = quest.answers[i],
+                        textColor = Color.White
+                    )
                 }
             }
         }
